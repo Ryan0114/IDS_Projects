@@ -12,5 +12,9 @@ int main() {
 
     vector<vector<double>> xy_data = rt2xy(rt_data); 
 
-    segment(xy_data);
-}
+    int tol_t = xy_data.size();
+    cout << tol_t << endl;
+
+    vector<Segment> seg = segment(xy_data);
+
+} 

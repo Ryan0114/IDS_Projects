@@ -34,26 +34,53 @@ vector<vector<double>> rt2xy(ifstream &fin) {
 }
 
 vector<Segment> segment(vector<vector<double>> &xy_data) {
+    ofstream file;
+    file.open("segmented_data.dat");
+
     vector<Segment> segments;
     double threshold = 0.5;
     
     int tol_t = xy_data.size();
 
+    Segment seg;
     for (int t=0; t<tol_t; t++) {
-        vector<bool> segmented(360, false);
-        for (int i=0; i<360; i++) {
-            if (segmented[i]) continue;
-            
-            Point current(xy_data[t][2*i], xy_data[t][2*i+1]);
-            for (int k=-3; k<=3; k++) {
-                int nxt_idx = (i+k+360)%360;
-                if (segmented[nxt_idx]) continue;
-                
-                Point neighbor(xy_data[t][2*nxt_idx], xy_data[t][2*nxt_idx+1]);
+        int s_n = 0; // the number of segments in this second
 
-                // TODO think about how to segment (detecting 7 neighboring point)
+        vector<int> n0ind; 
+        for (int i=0; i<360; i++) {
+            if (xy_data[t][2*i]!=0 || xy_data[t][2*i+1]!=0) {
+                n0ind.push_back(i);
             }
         }
+
+        for (int i=0; i<n0ind.size()-1; i++) {
+            Point current(xy_data[t][2*n0ind[i]], xy_data[t][2*n0ind[i]+1]);
+            seg.segment.push_back(current);
+            seg.size++; 
+
+            int nxt_idx = n0ind[i+1];
+            
+            Point neighbor(xy_data[t][2*nxt_idx], xy_data[t][2*nxt_idx+1]);
+
+            if (current.dist_to(neighbor)<threshold) {
+                seg.segment.push_back(neighbor);
+                seg.size++;
+            } else {
+                segments.push_back(seg);
+                s_n++;
+                seg.segment.clear();
+                seg.size = 0;
+            }
+        }
+
+        file << s_n << endl;
+        for (int i=segments.size()-s_n; i<segments.size(); i++) {
+            file << segments[i].size << " ";
+            for (int j=0; j<segments[i].size; j++) {
+                file << segments[i].segment[j].x << " " << segments[i].segment[j].y << " "; 
+            } file << endl;
+        }
     }
+    file.close();
     return segments;
 }
