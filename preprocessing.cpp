@@ -3,7 +3,7 @@
 #include "preprocessing.h"
 using namespace std;
 
-#define PI atan(-1)
+#define PI acos(-1)
 
 double deg2rad(double deg) {
     return deg * PI / 180.0; 
@@ -33,9 +33,11 @@ vector<vector<double>> rt2xy(ifstream &fin) {
     return xy_data;
 }
 
-vector<Segment> segment(vector<vector<double>> &xy_data) {
+vector<Segment> segment(vector<vector<double>> &xy_data, bool output) {
     ofstream file;
-    file.open("segmented_data.dat");
+    if (output) {
+        file.open("segmented_data.dat");
+    }
 
     vector<Segment> segments;
     double threshold = 0.5;
@@ -72,15 +74,18 @@ vector<Segment> segment(vector<vector<double>> &xy_data) {
                 seg.size = 0;
             }
         }
-
-        file << s_n << endl;
-        for (int i=segments.size()-s_n; i<segments.size(); i++) {
-            file << segments[i].size << " ";
-            for (int j=0; j<segments[i].size; j++) {
-                file << segments[i].segment[j].x << " " << segments[i].segment[j].y << " "; 
-            } file << endl;
+        
+        if (output) {
+            file << s_n << endl;
+            for (int i=segments.size()-s_n; i<segments.size(); i++) {
+                file << segments[i].size << " ";
+                for (int j=0; j<segments[i].size; j++) {
+                    file << segments[i].segment[j].x << " " << segments[i].segment[j].y << " "; 
+                } file << endl;
+            }
         }
     }
-    file.close();
+    if (output) file.close();
+
     return segments;
 }
