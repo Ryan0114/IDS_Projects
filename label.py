@@ -7,17 +7,13 @@ bot = "turtlebot/"
 # bot = "minibot/"
 
 # choose file
-filename = "segmented_data/box_segmented.dat"
-# filename = "segmented_data/ball_static_segmented.dat"
-# filename = "segmented_data/ball_moving_segmented.dat"
+filename = "box"
+# filename = "ball_static"
+# filename = "ball_moving"
 
-input_file = bot + filename
+input_file = bot + "segmented_data/" + filename + "_segmented.dat"
 
-output_filename = "labeled_data/box.dat"
-# output_filename = "labeled_data/ball_static.dat"
-# output_filename = "labeled_data/ball_moving.dat"
-
-output_file = bot + output_filename
+output_file = bot + "labeled_data/" + filename + "_labeled.dat"
 
 WINDOW_SIZE = (800, 800)
 LABELED_COLOR = (255, 0, 0)

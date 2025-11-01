@@ -40,7 +40,7 @@ vector<Segment> segment(vector<vector<double>> &xy_data, bool output) {
     }
 
     vector<Segment> segments;
-    double threshold = 0.5;
+    double threshold = 0.1;
     
     int tol_t = xy_data.size();
 
