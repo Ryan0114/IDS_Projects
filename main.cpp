@@ -25,4 +25,6 @@ int main() {
     cout << tol_t << endl;
 
     vector<Segment> seg = segment(xy_data, true);
+
+
 } 
