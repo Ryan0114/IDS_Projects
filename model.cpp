@@ -31,5 +31,6 @@ double NB_eval(double x, NB nb) {
 
 // (DT-BF based adaboost)
 pair<vector<double>, vector<NB>> adaboost(vector<vector<double>> &features) {
-
+    NB nb = NB_train(features[2]);
+    cout << NB_eval(3) << endl;
 }

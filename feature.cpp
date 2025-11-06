@@ -27,13 +27,13 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
     }  
 
     int seg_num = segments.size();
-    vector<vector<double>> features(seg_num, vector<double> (6));
+    vector<vector<double>> features(6, vector<double> (seg_num));
     // features: number of points, radius, curvature, distance of the center of circle to the origin
      
     for (int i=0; i<seg_num; i++) {
         int n = segments[i].points.size();
-        features[i][0] = segments[i].label;
-        features[i][1] = n;
+        features[0][i] = segments[i].label;
+        features[1][i] = n;
 
         MatrixXd A(n, 3);
         VectorXd b(n);
@@ -59,8 +59,8 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
             s_c += (r_c - dis) * (r_c - dis);
         }
 
-        features[i][2] = r_c;
-        features[i][3] = s_c;
+        features[2][i] = r_c;
+        features[3][i] = s_c;
 
         double sum_x=0.0;
         double sum_y=0.0;
@@ -82,10 +82,10 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
         }
         
         double std_var=sqrt(distance_sum/n);
-        features[i][4]=std_var;
+        features[4][i]=std_var;
 
         double distance_mean=sqrt(mean_x*mean_x+mean_y*mean_y);
-        features[i][5]=distance_mean;
+        features[5][i]=distance_mean;
     }
 
     return features;
