@@ -17,6 +17,7 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
             for (int j=0; j<si_n; j++) {
                 fin >> x >> y;
                 seg.points.push_back(Point(x, y));
+                seg.size++;
             }
             segments.push_back(seg);
             seg.points.clear();
@@ -33,8 +34,6 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
         int n = segments[i].points.size();
         features[i][0] = n;
 
-        if (n < 3) continue;
-
         MatrixXd A(n, 3);
         VectorXd b(n);
         for (int j=0; j<n; j++) {
@@ -43,13 +42,29 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
             A(j,0) = -2*x;
             A(j,1) = -2*y;
             A(j,2) = 1;
-            b(j)   = -(x*x + y*y);
+            b(j) = -(x*x + y*y);
         }
 
         VectorXd x = A.colPivHouseholderQr().solve(b); 
+        /*
         cout << "Segment " << i << ":\n";
         cout << "x=\n" << x.transpose() << "\n";
         cout << "rank(A)=" << A.fullPivHouseholderQr().rank() << "\n\n";
+        */
+
+        double x_c = x(0);
+        double y_c = x(1);
+        double r_c = sqrt(x_c*x_c+y_c*y_c-x(2));
+        
+        double s_c = 0;
+        for (int j=0; j<segments[i].size; j++) {
+            double dis = Point(x_c, y_c).dist_to(segments[i].points[j]);
+            s_c += (r_c - dis) * (r_c - dis);
+        }
+
+        features[i][1] = r_c;
+        features[i][2] = s_c;
+
     }
 
     return features;
