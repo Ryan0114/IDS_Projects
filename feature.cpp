@@ -29,7 +29,6 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
     vector<vector<double>> features(seg_num, vector<double> (5));
     // features: number of points, radius, curvature, distance of the center of circle to the origin
      
-    cout << "seg_num: " << seg_num << endl;
     for (int i=0; i<seg_num; i++) {
         int n = segments[i].points.size();
         features[i][0] = n;
