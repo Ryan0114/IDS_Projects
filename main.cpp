@@ -33,8 +33,20 @@ int main() {
    
     // feature extraction 
     ifstream labeled_data(bot + "labeled_data/box_labeled.dat");
-    vector<vector<double>> features = feature_extraction(labeled_data);
+    vector<vector<double>> output = feature_extraction(labeled_data);
+    
+    cout << "Finish extracting features!\n";
 
+    vector<double> labels=output[0];
+
+    cout<<"Save\n";
+	
+    vector<vector<double>> features;
+    for(int i=0;i<5;i++){
+    	features.push_back(output[i+1]);
+    }
+
+    
     // training
-    adaboost(features);
+    adaboost(features,labels);
 } 
