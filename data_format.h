@@ -25,4 +25,5 @@ struct Point {
 struct Segment {
     int size=0;
     vector<Point> points;
+    int label;
 };
