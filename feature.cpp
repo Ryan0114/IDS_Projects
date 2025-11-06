@@ -61,40 +61,30 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
         features[i][1] = r_c;
         features[i][2] = s_c;
 
+        double sum_x=0.0;
+        double sum_y=0.0;
 
-	double sum_x=0.0;
-	double sum_y=0.0;
-
-
-	for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n; j++) {
             sum_x += segments[i].points[j].x;
             sum_y += segments[i].points[j].y;
         }
 
         double mean_x = sum_x / n;
         double mean_y = sum_y / n;
-	double distance_sum=0.0;
+        double distance_sum=0.0;
 
-	for (int j=0;j<n;j++){
-	    double dx = segments[i].points[j].x-mean_x;
-	    double dy = segments[i].points[j].y-mean_y;
-	    double distance = dx*dx+dy*dy;
-	    distance_sum+=distance;
-	}
-	
-	
-	double std_var=sqrt(distance_sum/n);
-
-	features[i][3]=std_var;
+        for (int j=0;j<n;j++){
+            double dx = segments[i].points[j].x-mean_x;
+            double dy = segments[i].points[j].y-mean_y;
+            double distance = dx*dx+dy*dy;
+            distance_sum+=distance;
+        }
         
+        double std_var=sqrt(distance_sum/n);
+        features[i][3]=std_var;
 
-	
-
-	double distance_mean=sqrt(mean_x*mean_x+mean_y*mean_y);
-
-	features[i][4]=distance_mean;
-
-
+        double distance_mean=sqrt(mean_x*mean_x+mean_y*mean_y);
+        features[i][4]=distance_mean;
     }
 
     return features;
