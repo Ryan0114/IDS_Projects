@@ -2,6 +2,7 @@
 #include "data_format.h"
 #include "preprocessing.h"
 #include "feature.h"
+#include "model.h"
 using namespace std;
 
 // choose bot type
@@ -29,8 +30,11 @@ int main() {
 
     vector<Segment> seg = segment(xy_data, true);
     */ 
-    
-    
+   
+    // feature extraction 
     ifstream labeled_data(bot + "labeled_data/box_labeled.dat");
-    feature_extraction(labeled_data);
+    vector<vector<double>> features = feature_extraction(labeled_data);
+
+    // training
+    adaboost(features);
 } 
