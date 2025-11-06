@@ -2,4 +2,5 @@
 #include "data_format.h"
 using namespace std;
 
-vector<vector<double>> feature_extraction(ifstream &fin);
+vector<Segment> read_labeled_file(ifstream &fin);
+vector<vector<double>> feature_extraction(vector<Segment> segments);

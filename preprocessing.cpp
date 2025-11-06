@@ -9,26 +9,43 @@ double deg2rad(double deg) {
     return deg * PI / 180.0; 
 }
 
-vector<vector<double>> rt2xy(ifstream &fin) {
-    vector<vector<double>> xy_data;
-    
+vector<vector<double>> read_rt_file(ifstream &fin) {
+    vector<vector<double>> rt_data;
+
     double ang, dist;
     int pt_cnt = 0;
-    vector<double> second; // store converted xy-data for each second
+    vector<double> second;
     while (fin >> ang >> dist) {
         if (pt_cnt==360) {
-            xy_data.push_back(second);
+            rt_data.push_back(second);
             second.clear();
             pt_cnt = 0;
-        } 
-       
-        double ang_rad = deg2rad(ang); 
-        double x = dist * cos(ang_rad);
-        double y = dist * sin(ang_rad);
-        second.push_back(x);
-        second.push_back(y);
-        
+        }
+
+        second.push_back(ang);
+        second.push_back(dist);
+
         pt_cnt++;
+    }
+
+    return rt_data;
+}
+
+vector<vector<double>> rt2xy(vector<vector<double>> rt_data) {
+    vector<vector<double>> xy_data;
+
+    vector<double> second;
+    for (int i=0; i<rt_data.size(); i++) {
+        for (int j=0; j<360; j++) {
+            double ang = rt_data[i][2*j];
+            double dist = rt_data[i][2*j+1];
+            double ang_rad = deg2rad(ang); 
+            double x = dist * cos(ang_rad);
+            double y = dist * sin(ang_rad);
+            second.push_back(x);
+            second.push_back(y);
+        }    
+        xy_data.push_back(second);
     } 
     return xy_data;
 }
