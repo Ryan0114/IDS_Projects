@@ -5,9 +5,8 @@
 using namespace std;
 using namespace Eigen;
 
-vector<vector<double>> feature_extraction(ifstream &fin) {
+vector<Segment> read_labeled_file(ifstream &fin) {
     vector<Segment> segments;
-    
     Segment seg;
     int Sn, si_n, label;
     double x, y;
@@ -24,8 +23,12 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
             seg.points.clear();
             seg.size = 0;
         }
-    }  
+    } 
 
+    return segments;
+}
+
+vector<vector<double>> feature_extraction(vector<Segment> segments) {
     int seg_num = segments.size();
     vector<vector<double>> features(6, vector<double> (seg_num));
     // features: number of points, radius, curvature, distance of the center of circle to the origin

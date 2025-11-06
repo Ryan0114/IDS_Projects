@@ -59,8 +59,6 @@ pair<vector<double>, vector<vector<NB>>> adaboost(vector<vector<double>> &featur
     vector<double> alphas;
     vector<vector<NB>> nbs;
     
-    cout << "Training...\n";
-
     for (int feature_idx = 0; feature_idx < 5; feature_idx++) {
         vector<double> feature_values(n_samples);
         for (int i = 0; i < n_samples; i++) {

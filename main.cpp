@@ -21,25 +21,25 @@ vector<Segment> segments;
 int main() {
     // data segmentation
     /*
+    cout << "Loading file..." << endl;
     ifstream rt_data(file);
-
-    vector<vector<double>> xy_data = rt2xy(rt_data); 
+    
+    vector<vector<double>> xy_data = rt2xy(read_rt_file(rt_data)); 
 
     int tol_t = xy_data.size();
     cout << tol_t << endl;
-
+    
+    cout << "Segmenting data..." << endl;
     vector<Segment> seg = segment(xy_data, true);
-    */ 
+    */
    
     // feature extraction 
-    ifstream labeled_data(bot + "labeled_data/box_labeled.dat");
-    vector<vector<double>> output = feature_extraction(labeled_data);
     
-    cout << "Finish extracting features!\n";
-
+    cout << "Extracting features..." << endl; 
+    ifstream labeled_data(bot + "labeled_data/box_labeled.dat");
+    vector<vector<double>> output = feature_extraction(read_labeled_file(labeled_data));
+    
     vector<double> labels=output[0];
-
-    cout<<"Save\n";
 	
     vector<vector<double>> features;
     for(int i=0;i<5;i++){
@@ -48,5 +48,6 @@ int main() {
 
     
     // training
+    cout << "Training..." << endl;
     adaboost(features,labels);
 } 
