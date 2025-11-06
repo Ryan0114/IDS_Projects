@@ -33,7 +33,6 @@ vector<vector<double>> feature_extraction(ifstream &fin) {
         MatrixXd A(n, 3);
         VectorXd b(n);
         
-
         for (int j=0; j<segments[i].size; j++) {
             A(j, 0) = -2*segments[i].points[j].x;
             A(j, 1) = -2*segments[i].points[j].y;
