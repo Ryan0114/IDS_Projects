@@ -55,32 +55,37 @@ vector<Segment> segment(vector<vector<double>> &xy_data, bool output) {
             }
         }
 
+        Point current(xy_data[t][2*n0ind[0]], xy_data[t][2*n0ind[0]+1]);
+        seg.points.push_back(current);
+        seg.size++;
         for (int i=0; i<n0ind.size()-1; i++) {
-            Point current(xy_data[t][2*n0ind[i]], xy_data[t][2*n0ind[i]+1]);
-            seg.segment.push_back(current);
-            seg.size++; 
-
             int nxt_idx = n0ind[i+1];
             
             Point neighbor(xy_data[t][2*nxt_idx], xy_data[t][2*nxt_idx+1]);
 
             if (current.dist_to(neighbor)<threshold) {
-                seg.segment.push_back(neighbor);
+                seg.points.push_back(neighbor);
+                current = neighbor;
                 seg.size++;
             } else {
-                segments.push_back(seg);
-                s_n++;
-                seg.segment.clear();
+                if (seg.size > 3) {
+                    segments.push_back(seg);
+                    s_n++;
+                }
+                seg.points.clear();
                 seg.size = 0;
+
+                current = neighbor;
             }
         }
         
         if (output) {
             file << s_n << endl;
             for (int i=segments.size()-s_n; i<segments.size(); i++) {
+                if (segments[i].size <= 3) continue;
                 file << segments[i].size << " ";
                 for (int j=0; j<segments[i].size; j++) {
-                    file << segments[i].segment[j].x << " " << segments[i].segment[j].y << " "; 
+                    file << segments[i].points[j].x << " " << segments[i].points[j].y << " "; 
                 } file << endl;
             }
         }

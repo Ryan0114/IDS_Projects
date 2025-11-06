@@ -24,5 +24,5 @@ struct Point {
 
 struct Segment {
     int size=0;
-    vector<Point> segment;
+    vector<Point> points;
 };

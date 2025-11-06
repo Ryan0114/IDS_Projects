@@ -7,9 +7,9 @@ bot = "turtlebot/"
 # bot = "minibot/"
 
 # choose file
-filename = "box"
+# filename = "box"
 # filename = "ball_static"
-# filename = "ball_moving"
+filename = "ball_moving"
 
 input_file = bot + "segmented_data/" + filename + "_segmented.dat"
 
