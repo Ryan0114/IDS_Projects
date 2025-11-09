@@ -31,7 +31,7 @@ vector<Segment> read_labeled_file(ifstream &fin) {
 vector<vector<double>> feature_extraction(vector<Segment> segments) {
     int seg_num = segments.size();
     vector<vector<double>> features(6, vector<double> (seg_num));
-    // features: number of points, radius, curvature, distance of the center of circle to the origin
+    // features: number of points, radius, curvature, stadard value, distance of the center of circle to the origin
      
     for (int i=0; i<seg_num; i++) {
         int n = segments[i].points.size();
