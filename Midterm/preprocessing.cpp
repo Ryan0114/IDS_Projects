@@ -34,8 +34,8 @@ vector<vector<double>> read_rt_file(ifstream &fin) {
 vector<vector<double>> rt2xy(vector<vector<double>> rt_data) {
     vector<vector<double>> xy_data;
 
-    vector<double> second;
     for (int i=0; i<rt_data.size(); i++) {
+		vector<double> second;
         for (int j=0; j<360; j++) {
             double ang = rt_data[i][2*j];
             double dist = rt_data[i][2*j+1];

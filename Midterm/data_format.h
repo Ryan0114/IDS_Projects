@@ -27,3 +27,9 @@ struct Segment {
     vector<Point> points;
     int label;
 };
+
+struct LogisticModel {
+    vector<double> w;
+    double b;
+};
+
