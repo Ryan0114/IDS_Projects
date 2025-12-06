@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Dec  6 15:09:54 2025
-
-@author: guans
-"""
-
 import pybullet as p
 import pybullet_data
 import numpy as np
